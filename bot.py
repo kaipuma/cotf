@@ -4,6 +4,8 @@ import sys
 import disnake as snek
 from disnake.ext import commands as cmds
 
+extensions = ["rpg"]
+
 try:
 	with open("config/bot.json") as file:
 		data = json.load(file)
@@ -14,5 +16,8 @@ except (FileNotFoundError, json.decoder.JSONDecodeError, KeyError):
 	sys.exit()
 
 bot = cmds.InteractionBot(test_guilds=guilds)
+
+for name in extensions:
+	bot.load_extension(f"extensions.{name}")
 
 bot.run(token)
