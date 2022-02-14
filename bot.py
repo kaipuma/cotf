@@ -13,4 +13,6 @@ except (FileNotFoundError, json.decoder.JSONDecodeError, KeyError):
 	print("Please create the \"config/bot.json\" file based on the template")
 	sys.exit()
 
+bot = cmds.InteractionBot(test_guilds=guilds)
+
 bot.run(token)
