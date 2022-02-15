@@ -105,6 +105,41 @@ class RPGCog(cmds.Cog):
 		await itr.send("I'll let everyone else know.", ephemeral=True)
 		await channel.send(ping, embed=embed)
 
+	@cmds.slash_command(
+		name="ocard",
+		description="Invoke the o-card (optionally anonymously)"
+	)
+	async def rpg_command_xcard(
+		self, 
+		itr, 
+		details: Optional[str] = None, 
+		mention: Optional[snek.Role | snek.Member] = None, 
+		anonymous: bool = True
+	):
+		"""
+		Evoke the "o-card" in the current channel
+		This is the inverse of the "x-card", and signals that you're having a good time
+
+		Parameters
+		----------
+		details: Optionally you may provide more detail as to why you invoked the o-card
+		mention: Optionally you may specify a role or user to ping. @here is used by default
+		anonymous: You may elect to reveal that it was you who invoked this
+		"""
+		ping = mention.mention if mention is not None else "@here"
+
+		embed = Embed(color=Color.green(), title=f"O-Card Invoked!")
+		if details is not None:
+			embed.add_field("They added the following details:", details)
+		if not anonymous:
+			avatar = itr.author.guild_avatar or itr.author.avatar
+			name = itr.author.nick or itr.author.name
+			embed.set_footer(text=f"Sent by {name}", icon_url=avatar.url)
+
+		channel = await self.bot.fetch_channel(itr.channel_id)
+		await itr.send("I'll let everyone else know.", ephemeral=True)
+		await channel.send(ping, embed=embed)
+
 def setup(bot):
 	bot.add_cog(RPGCog(bot))
 	print("Loaded rpg extension")
