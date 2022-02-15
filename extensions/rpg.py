@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 from inspect import cleandoc as dedent
 
 from disnake.ext.commands import Param
@@ -113,7 +113,7 @@ class RPGCog(cmds.Cog):
 		self, 
 		itr, 
 		details: Optional[str] = None, 
-		mention: Optional[snek.Role | snek.Member] = None, 
+		mention: Optional[Union[snek.Role, snek.Member]] = None, 
 		anonymous: bool = True
 	):
 		"""
