@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Exclude the filled config file so as to not push secrets to repo
+config.json
