@@ -31,9 +31,10 @@ class UtilitiesCog(cmds.Cog):
 
 	class _FeedbackType(Color, Enum):
 		Suggestion = Color.blurple().value
-		Bug = Color.yellow().value
+		Commands = Color.yellow().value
+		Bug = Color.magenta().value
 		Compliment = Color.green().value
-		Complaint = Color.red().value
+		Issue = Color.red().value
 		Other = Color.blurple().value
 
 	@cmds.slash_command(
@@ -41,9 +42,7 @@ class UtilitiesCog(cmds.Cog):
 		description="Submit feedback/suggestions about me or the server"
 	)
 	async def utilities_command_feedback(
-		self, 
-		itr, 
-		feedback: str, 
+		self, itr, feedback: str, 
 		kind: _FeedbackType = Param(
 			default = _FeedbackType.Other, 
 			name = "type",
