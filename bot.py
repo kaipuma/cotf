@@ -4,21 +4,21 @@ import sys
 import disnake as snek
 from disnake.ext import commands as cmds
 
-extensions = ["rpg", "utilities"]
-
 try:
 	with open("config/bot.json") as file:
 		data = json.load(file)
-	token = data["token"]
-	guilds = data["guilds"]
-	autothread = data["autothread"]
+	with open("config/template.bot.json") as file:
+		template = json.load(file)
+	if not set(data.keys()) == set(template.keys()) \
+	or any(value in data.values() for value in template.values()):
+		raise KeyError
 except (FileNotFoundError, json.decoder.JSONDecodeError, KeyError):
-	print("Please create the \"config/bot.json\" file based on the template")
+	print("Please create the \"config/bot.json\" file based on the template in \"config/template.bot.json\"")
 	sys.exit()
 
-bot = cmds.InteractionBot(test_guilds=guilds)
-bot.config = {"autothread":autothread}
-for name in extensions:
+bot = cmds.InteractionBot(test_guilds=data["guilds"])
+bot.config = data
+for name in data["extensions"]:
 	bot.load_extension(f"extensions.{name}")
 
-bot.run(token)
+bot.run(data["token"])
