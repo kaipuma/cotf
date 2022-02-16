@@ -1,4 +1,8 @@
 {
 	"token": "bot token here",
-	"guilds": [12345, 67890]
+	"guilds": [12345, 67890],
+	"autothread": {
+		"leader_ids": ["the id(s) of the role(s) representing admins", 1234567890],
+		"channel_ids": ["the id(s) of the channel(s) where messages from leaders will automatically get threads", 1234567890]
+	}
 }
