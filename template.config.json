@@ -5,5 +5,6 @@
 	"autothread": {
 		"leader_ids": ["the id(s) of the role(s) representing admins", 1234567890],
 		"channel_ids": ["the id(s) of the channel(s) where messages from leaders will automatically get threads", 1234567890]
-	}
+	},
+	"feedback_channel_id": "the id of the channel where feedback messages will be sent. probably one only seen by admins. This string will be replaced by the integer id"
 }
