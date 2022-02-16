@@ -11,13 +11,10 @@ class RPGCog(cmds.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 
-	@cmds.slash_command(
-		name="roll",
-		description="Roll some dice"
-	)
+	@cmds.slash_command(name="roll")
 	async def rpg_command_roll(self, itr, dice: str):
 		"""
-		Roll some amount of dice
+		Roll some dice
 
 		Parameters
 		----------
@@ -32,13 +29,10 @@ class RPGCog(cmds.Cog):
 				"(hint: use /dice for a full explanation of the /roll command syntax)"
 			), ephemeral=True)
 
-	@cmds.slash_command(
-		name="dice",
-		description="How to use the /roll command"
-	)
+	@cmds.slash_command(name="dice")
 	async def rpg_command_dice(self, itr):
 		"""
-		Show the user all the options available in the /roll command
+		Show how to use the /roll command
 		"""
 		await itr.send(
 			dedent("""
@@ -82,13 +76,14 @@ class RPGCog(cmds.Cog):
 			ephemeral=True
 		)
 
-	@cmds.slash_command(
-		name="xcard",
-		description="Invoke the x-card (anonymously)"
-	)
-	async def rpg_command_xcard(self, itr, details: Optional[str] = None, role: Optional[snek.Role] = None):
+	@cmds.slash_command(name="xcard")
+	async def rpg_command_xcard(
+		self, itr, 
+		details: Optional[str] = None, 
+		role: Optional[snek.Role] = None
+	):
 		"""
-		Evoke the rpg safety tool called the "x-card" in the current channel
+		Anonymously invoke the x-card in the current channel
 
 		Parameters
 		----------
@@ -105,10 +100,7 @@ class RPGCog(cmds.Cog):
 		await itr.send("I'll let everyone else know.", ephemeral=True)
 		await channel.send(ping, embed=embed)
 
-	@cmds.slash_command(
-		name="ocard",
-		description="Invoke the o-card (optionally anonymously)"
-	)
+	@cmds.slash_command(name="ocard")
 	async def rpg_command_ocard(
 		self, 
 		itr, 
@@ -117,8 +109,7 @@ class RPGCog(cmds.Cog):
 		anonymous: bool = True
 	):
 		"""
-		Evoke the "o-card" in the current channel
-		This is the inverse of the "x-card", and signals that you're having a good time
+		Invoke the "o-card" in the current channel
 
 		Parameters
 		----------

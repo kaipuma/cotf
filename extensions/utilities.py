@@ -37,10 +37,7 @@ class UtilitiesCog(cmds.Cog):
 		Issue = Color.red().value
 		Other = Color.blurple().value
 
-	@cmds.slash_command(
-		name="feedback",
-		description="Submit feedback/suggestions about me or the server"
-	)
+	@cmds.slash_command(name="feedback")
 	async def utilities_command_feedback(
 		self, itr, feedback: str, 
 		kind: _FeedbackType = Param(
@@ -50,7 +47,7 @@ class UtilitiesCog(cmds.Cog):
 		)
 	):
 		"""
-		Allow users to submit feedback/suggestions about the server or this bot
+		Submit feedback/suggestions about this bot or the server
 
 		Parameters
 		----------
