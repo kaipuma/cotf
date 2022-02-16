@@ -109,7 +109,7 @@ class RPGCog(cmds.Cog):
 		name="ocard",
 		description="Invoke the o-card (optionally anonymously)"
 	)
-	async def rpg_command_xcard(
+	async def rpg_command_ocard(
 		self, 
 		itr, 
 		details: Optional[str] = None, 
@@ -132,9 +132,10 @@ class RPGCog(cmds.Cog):
 		if details is not None:
 			embed.add_field("They added the following details:", details)
 		if not anonymous:
-			avatar = itr.author.guild_avatar or itr.author.avatar
-			name = itr.author.nick or itr.author.name
-			embed.set_footer(text=f"Sent by {name}", icon_url=avatar.url)
+			embed.set_footer(
+				text=f"Sent by {itr.author.display_name}", 
+				icon_url=itr.author.display_avatar.url
+			)
 
 		channel = await self.bot.fetch_channel(itr.channel_id)
 		await itr.send("I'll let everyone else know.", ephemeral=True)
