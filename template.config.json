@@ -7,5 +7,28 @@
 		"leader_ids": ["the id(s) of the role(s) representing admins", 1234567890],
 		"channel_ids": ["the id(s) of the channel(s) where messages from leaders will automatically get threads", 1234567890]
 	},
-	"feedback_channel_id": "the id of the channel where feedback messages will be sent. probably one only seen by admins. This string will be replaced by the integer id"
+	"feedback_channel_id": "the id of the channel where feedback messages will be sent. probably one only seen by admins. This string will be replaced by the integer id",
+	"emoji":
+	{
+		"description(remove me)": "This dictionary is populated with the emojis that each extention requires. Fill each with the name of the emoji as it is on your server (minus the enclosing :'s)",
+		"sw":
+		{
+			"TRIUMPH": "swtr",
+			"SUCCESS": "swsu",
+			"ADVANTAGE": "swa",
+			"BLANK": "swbl",
+			"THREAT": "swth",
+			"FAILURE": "swfa",
+			"DESPAIR": "swde",
+			"LIGHT": "swli",
+			"DARK": "swda",
+			"YELLOW": "swy",
+			"GREEN": "swg",
+			"BLUE": "swb",
+			"WHITE": "sww",
+			"BLACK": "swk",
+			"PURPLE": "swp",
+			"RED": "swr"
+		}
+	}
 }
