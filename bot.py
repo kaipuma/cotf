@@ -16,7 +16,7 @@ except (FileNotFoundError, json.decoder.JSONDecodeError, KeyError):
 	print("Please create the \"config.json\" file based on the template in \"template.config.json\"")
 	sys.exit()
 
-bot = cmds.InteractionBot(test_guilds=data["guilds"] or None)
+bot = cmds.InteractionBot(test_guilds=[data["guild"]])
 bot.config = data
 for name in data["extensions"]:
 	bot.load_extension(f"extensions.{name}")

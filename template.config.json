@@ -1,8 +1,9 @@
 {
 	"token": "bot token here",
-	"extensions": ["the list of extensions the bot wil use. each should be a filename from ./extensions/, minus the .py"],
-	"guilds": ["the id(s) of the guild(s) the bot should be available in. Leave list empty for global", 1234567890],
-	"autothread": {
+	"extensions": ["the list of extensions the bot wil use. each should be a filename from ./extensions/, minus the .py", "rpg", "utilities", "sw"],
+	"guild": "the id of the guild the bot should be available in (this will be an integer)",
+	"autothread":
+	{
 		"leader_ids": ["the id(s) of the role(s) representing admins", 1234567890],
 		"channel_ids": ["the id(s) of the channel(s) where messages from leaders will automatically get threads", 1234567890]
 	},
