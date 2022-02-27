@@ -29,6 +29,14 @@
 			"BLACK": "swk",
 			"PURPLE": "swp",
 			"RED": "swr"
+		},
+		"spec":
+		{
+			"BOON": "specbn",
+			"DRAWBACK": "specdb",
+			"BLANK": "specbl",
+			"CHALLENGE": "specchl",
+			"ADVANTAGE": "specadv"
 		}
 	}
 }
