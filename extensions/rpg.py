@@ -10,6 +10,7 @@ from d20 import roll, RollError
 class RPGCog(cmds.Cog):
 	def __init__(self, bot):
 		self.bot = bot
+		self.inits = dict()
 
 	@cmds.slash_command(name="roll")
 	async def rpg_command_roll(self, itr, dice: str):
@@ -131,6 +132,78 @@ class RPGCog(cmds.Cog):
 		channel = await self.bot.fetch_channel(itr.channel_id)
 		await itr.send("I'll let everyone else know.", ephemeral=True)
 		await channel.send(ping, embed=embed)
+
+	class Initiative(dict):
+		@property
+		def embed(self):
+			size, desc = len(str(max(self.values(), default=0))), []
+			for name, i in sorted(self.items(), key=lambda v: v[1], reverse=True):
+				if isinstance(name, int):
+					name = f"<@{name}>"
+				desc.append(f"`{i:{size}}` - {name}")
+			return Embed(
+				color = Color.blurple(),
+				title = "Initiative",
+				description = "\n".join(desc) or "[no entries]"
+			)
+		
+		async def update(self, resend=None):
+			if hasattr(self, "itr"):
+				await self.itr.edit_original_message(embed=self.embed)
+
+	@cmds.slash_command(name="initiative")
+	async def rpg_command_initiative(
+		self, 
+		itr,
+		value: Optional[int] = None, 
+		dice: Optional[str] = Param(name="roll", default=None),
+		clear: Optional[bool] = None, 
+		name: Optional[str] = None
+	):
+		"""
+		Set your initiative (unique per player per channel), or view the channel's list
+
+		Parameters
+		----------
+		value: Set the initiative in this channel to the given value
+		dice: Alternatively generate it as if using the /roll command
+		clear: If true, remove the initiative from this channel's list
+		name: If you're manipulating an npc's initiative, use its name
+		"""
+		# Count the number of params set (besides name). There can't be > 1
+		if sum((p is not None for p in (value, dice, clear))) > 1:
+			return await itr.send("You can use only one of `value`/`dice`/`clear`", ephemeral=True)
+
+		if (cid := itr.channel_id) not in self.inits:
+			self.inits[cid] = self.Initiative()
+		init = self.inits[cid]
+		name = itr.author.id if name is None else name.lower().capitalize()
+		response = None
+
+		if dice is not None:
+			try: result = roll(dice)
+			except RollError:
+				return await itr.send(f"Error processing {dice}", ephemeral=True)
+			response = f"You rolled {result}. This initiative has been set"
+			value = result.total
+
+		if value is not None:
+			init[name] = value
+			response = response or f"Initiative set to {value}"
+
+		elif clear is True:
+			response = f"There is no initiative under the name {name}"
+			if init.pop(name, None) is not None:
+				response = "The initiative entry in this channel has been removed"
+
+		if response is None:
+			if hasattr(init, "itr"):
+				await init.itr.delete_original_message()
+			await itr.send(embed=init.embed)
+			init.itr = itr
+		else:
+			await itr.send(response, ephemeral=True)
+			await init.update()
 
 def setup(bot):
 	bot.add_cog(RPGCog(bot))
